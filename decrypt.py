@@ -17,6 +17,7 @@ from functions.decryption_tools import getAlteredCiphers
 from functions.decryption_tools import getDecodedCiphers
 from functions.decryption_tools import checkAllWordsForLetters
 from functions.decryption_tools import getAlmostDone
+from functions.decryption_tools	import writeDecodedCiphersToFile
 import time
 import sys
 
@@ -61,12 +62,12 @@ while(running):
 	choice      = input()
 
 	clearScreen()
-	if RepresentsInt(choice) is False or choice > 12:
+	if RepresentsInt(choice) is False:
 		print("Incorrect entry, reloading...")
 		import time
 		time.sleep(3)
 		continue
-		
+
 	choice = int(choice)
 
 	if choice 	== 1:
@@ -102,6 +103,9 @@ while(running):
 		print("Amount Decoded so far: ",len(getDecodedCiphers()))
 	elif choice == 12:
 		displayCipherWords(getAlmostDone())
+	elif choice == 13:
+		writeDecodedCiphersToFile()
+			
 					
 
 

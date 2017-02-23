@@ -22,6 +22,7 @@ menu 		= """
 10. Replace a character \n
 11. How many words have been decoded?\n
 12. Show words that are almost decoded\n
+13. Write decoded ciphers to file\n
 					"""
 loadFile 	= "Please enter the file to process: "
 divider		= "==================================="
@@ -33,7 +34,7 @@ divider		= "==================================="
 def displayAppHeader():
 	print(decrypter)
 	print("Running on: ",platform.system())
-	print("Session-Time-Stamp: ",getSessionStart())
+	print("Session-Time-Stamp, all files will be saved with this stamp: ",getSessionStart())
 
 ## TODO - make a function that prints the menu that appears after a file is loaded
 ## in the terminal
@@ -82,7 +83,6 @@ def readUserInputForStringChange():
 	return (old,new)
 
 def displayCipherWords(dictOfCipherWords):
-	count = 0
 	for key in dictOfCipherWords:
 		print(divider)
 		print("Orig-Word:",key,"Changes:",dictOfCipherWords[key].changes,end='')

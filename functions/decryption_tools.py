@@ -13,6 +13,7 @@ alteredCiphers			= {}
 decodedCiphers			= {}
 appliedCiphers			= []
 letterChangesFileName   = "letterchanges"
+decodedCipherFileName   = "decoded_words"
 decryptedFileName		= "decrypted"
 sessionStart			= time.strftime("%m_%d_%Y_%I_%M_%S")
 
@@ -64,7 +65,7 @@ def setChange(oldAndNewTuple,cipherWordList):
 		else:
 			alteredCiphers[key] = cipherWordList[key]
 			cipherWordList = checkAllWordsForLetters(alteredCiphers[key].changes,cipherWordList)
-	writeToFile(oldAndNewTuple,letterChangesFileName)						
+	##writeToFile(oldAndNewTuple,letterChangesFileName)						
 	return cipherWordList
 
 def checkAllWordsForLetters(changeTuples,cipherWordList):
@@ -106,7 +107,14 @@ def setListOfCipherWords(wordCountTuple):
     for i in range(0,length):
     	aCipherWord = CipherWord(wordCountTuple[i][0],wordCountTuple[i][1])
     	cipherWords[wordCountTuple[i][0]] = aCipherWord
-    return cipherWords    	
+    return cipherWords
+
+def writeDecodedCiphersToFile():
+	afilename = decodedCipherFileName+"_"+sessionStart+".csv"
+	for key in decodedCiphers:
+		changeTuple = (key,decodedCiphers[key].word)
+		writeToFile([changeTuple],afilename)
+
 
 
 ## 
