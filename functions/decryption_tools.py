@@ -1,5 +1,9 @@
 from collections 		import Counter
 from classes.CipherWord	import CipherWord
+import csv
+import time
+import os.path
+
 
 ## list of changes
 listOfChanges 			= []
@@ -8,6 +12,29 @@ previousTextVersions 	= []
 alteredCiphers			= {}
 decodedCiphers			= {}
 appliedCiphers			= []
+letterChangesFileName   = "letterchanges"
+decryptedFileName		= "decrypted"
+sessionStart			= time.strftime("%m_%d_%Y_%I_%M_%S")
+
+def writeToFile(aListOfChanges,fileName):
+	fileName 		= fileName+"_"+sessionStart+".csv"
+	file_exists 	= os.path.isfile(fileName)
+	with open(fileName, 'a') as csvfile:
+		fieldnames 	= ['original', 'changed_to']
+		writer 		= csv.DictWriter(csvfile, fieldnames=fieldnames)
+		
+		if not file_exists:
+			writer.writeheader()  # file doesn't exist yet, write a header
+		for i, v in enumerate(aListOfChanges):
+			print("Writing: ",v)
+			writer.writerow({'original': v[0], 'changed_to': v[1]})
+
+def writeDecryptionTextToFile(textToWrite):
+	fileName  = decryptedFileName+"_"+sessionStart+".txt"
+	text_file = open(fileName, "w")
+	text_file.write(textToWrite)
+	text_file.close()
+	print("Decrypted data written")			
 
 ## counts the occurence of each letter in text
 ## and returns tuples of each letter, and the letter's
@@ -36,11 +63,13 @@ def setChange(oldAndNewTuple,cipherWordList):
 			cipherWordList = checkAllWordsForLetters(decodedCiphers[key].changes,cipherWordList)
 		else:
 			alteredCiphers[key] = cipherWordList[key]
-			cipherWordList = checkAllWordsForLetters(alteredCiphers[key].changes,cipherWordList)				
+			cipherWordList = checkAllWordsForLetters(alteredCiphers[key].changes,cipherWordList)
+	writeToFile(oldAndNewTuple,letterChangesFileName)						
 	return cipherWordList
 
 def checkAllWordsForLetters(changeTuples,cipherWordList):
     keys = list(cipherWordList.keys())
+    listOfChanges.append(changeTuples)
     for word in keys:
         for change in changeTuples:
         	if change[0] in word:
@@ -48,7 +77,8 @@ def checkAllWordsForLetters(changeTuples,cipherWordList):
         			if cipherWordList[word].decoded:
         				decodedCiphers[word] = cipherWordList.pop(word)
         			else:
-        				alteredCiphers[word] = cipherWordList[word]
+        				alteredCiphers[word] = cipherWordList[word]	
+    writeToFile(changeTuples,letterChangesFileName)	    				
     return cipherWordList
 
 def getAlmostDone():
@@ -90,6 +120,9 @@ def getDecodedCiphers():
 	return decodedCiphers
 
 def appliedCiphers():
-	return appliedCiphers			
+	return appliedCiphers	
+
+def getSessionStart():
+	return sessionStart			
 
 

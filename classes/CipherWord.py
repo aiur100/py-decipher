@@ -69,8 +69,7 @@ class CipherWord:
     		 	if aKey not in self.letterChangePos:
     		 		letters[i] = newChar
     		 		self.letterChangePos.append(newChar+"."+str(i))
-    		 i += 1		
-    	print(letters)	 
+    		 i += 1		 
     	self.word = empty.join(letters) 			
     			
 

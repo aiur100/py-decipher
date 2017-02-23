@@ -17,6 +17,7 @@ from functions.decryption_tools import getAlteredCiphers
 from functions.decryption_tools import getDecodedCiphers
 from functions.decryption_tools import checkAllWordsForLetters
 from functions.decryption_tools import getAlmostDone
+import time
 import sys
 
 clearScreen()
@@ -46,12 +47,28 @@ letterCount		= countLettersInText(removeNewLine.lower())
 wordCount		= countWordsInText(lowerCaseString)
 cipherWords     = setListOfCipherWords(wordCount)
 
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 clearScreen()
 
 while(running):
 	displayMenu()
-	choice      = int(input())
+	choice      = input()
+
 	clearScreen()
+	if RepresentsInt(choice) is False or choice > 12:
+		print("Incorrect entry, reloading...")
+		import time
+		time.sleep(3)
+		continue
+		
+	choice = int(choice)
+
 	if choice 	== 1:
 		displayLetterCounts(letterCount)
 	elif choice == 2:

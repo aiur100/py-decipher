@@ -1,6 +1,7 @@
 import os
 import platform
 from classes.CipherWord	import CipherWord
+from functions.decryption_tools import getSessionStart
 
 decrypter   = """   
   _______  __________  _____  ______
@@ -32,6 +33,7 @@ divider		= "==================================="
 def displayAppHeader():
 	print(decrypter)
 	print("Running on: ",platform.system())
+	print("Session-Time-Stamp: ",getSessionStart())
 
 ## TODO - make a function that prints the menu that appears after a file is loaded
 ## in the terminal
@@ -87,7 +89,8 @@ def displayCipherWords(dictOfCipherWords):
 		print("\n")
 		print("Word-Count:",dictOfCipherWords[key].count,"Decoded:",dictOfCipherWords[key].decoded,end='')
 		print("\n")
-		print("Current-Word:",dictOfCipherWords[key].word)
+		print("Current-Word:")
+		dictOfCipherWords[key].printChanges()
 		print(divider)
 
 
