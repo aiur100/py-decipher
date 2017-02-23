@@ -23,6 +23,8 @@ menu 		= """
 11. How many words have been decoded?\n
 12. Show words that are almost decoded\n
 13. Write decoded ciphers to file\n
+14. Load recent changes from file\n
+15. Exit\n
 					"""
 loadFile 	= "Please enter the file to process: "
 divider		= "==================================="

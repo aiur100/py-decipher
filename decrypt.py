@@ -18,6 +18,11 @@ from functions.decryption_tools import getDecodedCiphers
 from functions.decryption_tools import checkAllWordsForLetters
 from functions.decryption_tools import getAlmostDone
 from functions.decryption_tools	import writeDecodedCiphersToFile
+from functions.decryption_tools import readInCsv
+from functions.decryption_tools import replaceTextWithDecodedCiphers
+from functions.decryption_tools import replaceTextWithAlteredCiphers
+from functions.decryption_tools import replaceEachLetterWithDecodedLetter
+from functions.decryption_tools import writeDecryptionTextToFile
 import time
 import sys
 
@@ -36,7 +41,7 @@ fileAsString 	= loadFileAndReturnContents(pathToFile)
 ##lower case string used for counting letters, since 
 ##I don't want A and a to be counted separately. 
 lowerCaseString = fileAsString
-lowerCaseString.lower()
+lowerCaseString = lowerCaseString.lower()
 
 ##remove new line from strings to match words easily.
 removeNewLine   = fileAsString
@@ -87,7 +92,8 @@ while(running):
 		print(getChangeTuples())
 	elif choice == 6:
 		print("Applying changes...")
-		fileAsString = applyChanges(fileAsString)
+		lowerCaseString = replaceEachLetterWithDecodedLetter(lowerCaseString)
+		writeDecryptionTextToFile(lowerCaseString)
 	elif choice == 7:
 		displayCipherWords(cipherWords)
 	elif choice == 8:
@@ -105,7 +111,13 @@ while(running):
 		displayCipherWords(getAlmostDone())
 	elif choice == 13:
 		writeDecodedCiphersToFile()
-			
+	elif choice == 14:
+		fileName 		= input("Enter File Name: ")	
+		changesToLoad 	= readInCsv(fileName)
+		checkAllWordsForLetters(changesToLoad,cipherWords)
+	elif choice == 15:
+		 sys.exit(0)	
+
 					
 
 

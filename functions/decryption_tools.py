@@ -3,6 +3,7 @@ from classes.CipherWord	import CipherWord
 import csv
 import time
 import os.path
+import re
 
 
 ## list of changes
@@ -78,7 +79,7 @@ def checkAllWordsForLetters(changeTuples,cipherWordList):
         			if cipherWordList[word].decoded:
         				decodedCiphers[word] = cipherWordList.pop(word)
         			else:
-        				alteredCiphers[word] = cipherWordList[word]	
+        				alteredCiphers[word] = cipherWordList[word]	  				
     writeToFile(changeTuples,letterChangesFileName)	    				
     return cipherWordList
 
@@ -115,6 +116,46 @@ def writeDecodedCiphersToFile():
 		changeTuple = (key,decodedCiphers[key].word)
 		writeToFile([changeTuple],afilename)
 
+def readInCsv(fileName):
+	file_exists 	= os.path.isfile(fileName)
+	csvChangeList   = []
+	if file_exists is False:
+		return False
+
+	with open(fileName) as csvfile:
+		reader = csv.DictReader(csvfile)
+		for row in reader:
+			csvChangeList.append((row['original'],row['changed_to']))
+	return csvChangeList	    
+
+def replaceTextWithDecodedCiphers(fileText):
+	for key in decodedCiphers:
+		match 		= "(?<![\w\d])"+key+"(?![\w\d])"
+		fileText 	= re.sub(match,decodedCiphers[key].word,fileText)
+	return fileText
+
+def replaceTextWithAlteredCiphers(fileText):
+	for key in alteredCiphers:
+		match 		= "(?<![\w\d])"+key+"(?![\w\d])"
+		fileText 	= re.sub(match,alteredCiphers[key].word,fileText)
+	return fileText
+
+def replaceEachLetterWithDecodedLetter(fileText):
+	i 			= 0 
+	stringList 	= list(fileText)
+	empty   	= ""
+	while i < len(stringList):
+		stringList[i] 	 = getDecodedLetter(stringList[i])
+		i 				+= 1
+	return empty.join(stringList)	
+
+
+
+def getDecodedLetter(char):
+	aChangeDict = dict(listOfChanges[0])
+	if char in aChangeDict:
+		return aChangeDict[char]
+	return char
 
 
 ## 
