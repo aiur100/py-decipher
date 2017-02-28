@@ -59,7 +59,14 @@ def RepresentsInt(s):
         return True
     except ValueError:
         return False
-
+print("\n==================================")
+print("Top 5 Letters by Amount of Times Appeared in Text: ")
+displayLetterCounts(letterCount,5)
+print("==================================")
+print("Top 5 words by Amount of Times Appeared in Text: ")
+displayWordCounts(wordCount,5)
+print("==================================")
+choice 	   = input("Press Any Key and enter to continue to Menu: ")
 clearScreen()
 
 while(running):
@@ -80,7 +87,7 @@ while(running):
 	elif choice == 2:
 		displayWordCounts(wordCount)
 	elif choice == 3:
-		print(fileAsString)
+		print(lowerCaseString)
 	elif choice == 4:
 		print(fileAsString)
 	elif choice == 5:

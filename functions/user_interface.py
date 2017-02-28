@@ -67,15 +67,23 @@ def loadFileAndReturnContents(pathToFile):
 	return file.read()
 
 ##displays letter counts
-def displayLetterCounts(listOfLetterCountTuples):
-	length = len(listOfLetterCountTuples)
+def displayLetterCounts(listOfLetterCountTuples,top = -1):
+	if top == -1:
+		length = len(listOfLetterCountTuplestop)
+	else:
+		length = top
+
 	for i in range(1,length):
 		print(listOfLetterCountTuples[i][0],": ",listOfLetterCountTuples[i][1])
 
 ##displays word counts
 ##@param <list-of-tuples>
-def displayWordCounts(listOfWordCountTuples):
-	length = len(listOfWordCountTuples)
+def displayWordCounts(listOfWordCountTuples,top = -1):
+	if top == -1:
+		length = len(listOfWordCountTuples)
+	else:
+		length = top
+
 	for i in range(0,length):
 		print(listOfWordCountTuples[i][0],": ",listOfWordCountTuples[i][1])
 
@@ -87,10 +95,9 @@ def readUserInputForStringChange():
 def displayCipherWords(dictOfCipherWords):
 	for key in dictOfCipherWords:
 		print(divider)
-		print("Orig-Word:",key,"Changes:",dictOfCipherWords[key].changes,end='')
-		print("\n")
-		print("Word-Count:",dictOfCipherWords[key].count,"Decoded:",dictOfCipherWords[key].decoded,end='')
-		print("\n")
+		print("Orig-Word:",key," - Changes:",dictOfCipherWords[key].changes,end='')
+		print(" - Word-Count:",dictOfCipherWords[key].count," - Decoded:",dictOfCipherWords[key].decoded,end='')
+		print("")
 		print("Current-Word:")
 		dictOfCipherWords[key].printChanges()
 		print(divider)

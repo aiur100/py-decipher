@@ -56,7 +56,7 @@ def countWordsInText(text):
 
 ## sets a change from old string to new string
 def setChange(oldAndNewTuple,cipherWordList):
-	listOfChanges.append(oldAndNewTuple)
+	##listOfChanges.append(oldAndNewTuple)
 	key = oldAndNewTuple[0]
 	if key in cipherWordList:
 		cipherWordList[key].changeWord(oldAndNewTuple[1])
@@ -88,7 +88,7 @@ def getAlmostDone():
 	for key in alteredCiphers:
 		if alteredCiphers[key].decoded == False:
 			percentage = int((len(alteredCiphers[key].letterChangePos)/len(alteredCiphers[key].word))*100)
-			if percentage > 80:
+			if percentage > 70 and percentage < 100:
 				ciphersAlmostDone[key] = alteredCiphers[key]
 	return ciphersAlmostDone		
 
@@ -152,7 +152,12 @@ def replaceEachLetterWithDecodedLetter(fileText):
 
 
 def getDecodedLetter(char):
-	aChangeDict = dict(listOfChanges[0])
+	print(listOfChanges)
+	if len(listOfChanges) == 1:
+	    aChangeDict = dict(listOfChanges[0])
+	else:
+	    aChangeDict = dict(listOfChanges)
+
 	if char in aChangeDict:
 		return aChangeDict[char]
 	return char

@@ -70,7 +70,14 @@ class CipherWord:
     		 		letters[i] = newChar
     		 		self.letterChangePos.append(newChar+"."+str(i))
     		 i += 1		 
-    	self.word = empty.join(letters) 			
+    	self.word = empty.join(letters)
+
+    def isLetterChanged(self,char,position):
+    	key = char+"."+str(position)
+    	if key in self.letterChangePos:
+    		return True
+    	else:
+    		return False 
     			
 
     def isKeyAChange(self,aChange):
@@ -92,8 +99,9 @@ class CipherWord:
     	print("WORD: ")
     	i = 0
     	while i < len(self.word):
-    		if self.isValueAChange(self.word[i]):
-    			print(".",self.word[i],".",end='',sep="")
+    		##if self.isValueAChange(self.word[i]):
+    		if self.isLetterChanged(self.word[i],i):
+    			print("\033[1;31m",self.word[i],"\033[1;m",end='',sep="")
     		else:
     			print(self.word[i],end='',sep="")	
     		i += 1
